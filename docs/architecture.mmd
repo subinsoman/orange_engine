@@ -1,0 +1,63 @@
+flowchart LR
+  %% Seahorse Architecture (Mermaid)
+  %% Export: mmdc -i docs/architecture.mmd -o docs/architecture.png
+
+  %% Client Layer
+  subgraph Client
+    UI["AngularJS SPA\n`frontend/`\nWebpack dev-server"]
+  end
+
+  %% Edge / Reverse Proxy
+  subgraph Edge
+    RP["Node.js Reverse Proxy\n`proxy/`\nExpress + http-proxy\nSessions/Passport"]
+  end
+
+  UI <-->|HTTP 80/443\nWebSockets (SockJS/STOMP)| RP
+
+  %% Backend Services
+  subgraph Backend[Backend (Scala, sbt multi-project)]
+    WM["Workflow Manager\n`workflowmanager/`"]
+    SM["Session Manager\n`sessionmanager/`\nHTTP :9082"]
+    DSM["Datasource Manager\n`datasourcemanager/`"]
+    LS["Library Service\n`libraryservice/`"]
+    SCH["Scheduling Manager\n`schedulingmanager/`"]
+  end
+
+  RP <-->|REST| WM
+  RP <-->|REST| SM
+  RP <-->|REST| DSM
+  RP <-->|REST| LS
+  RP <-->|REST| SCH
+
+  %% Execution Plane
+  subgraph Exec[Execution Plane]
+    WE["Workflow Executor (Spark)\n`seahorse-workflow-executor/`"]
+    NB["Notebook Server\n`remote_notebook/`\nJupyter kernels"]
+  end
+
+  %% Infra
+  subgraph Infra[Infrastructure]
+    MQ[(RabbitMQ\nAMQP :5672)]
+    DB[(H2 Database\nJDBC TCP :1521)]
+    FS[(Local Filesystem\nLogs / Artifacts)]
+  end
+
+  %% Messaging and Storage Links
+  SM <-.->|AMQP\nHeartbeats/Control| MQ
+  WE <-.->|AMQP\nStatus/Events| MQ
+  SM <-.->|JDBC\n`jdbc:h2:tcp://database:1521/sessionmanager`| DB
+
+  %% Service-to-Service HTTP Links
+  WE -->|HTTP\nWorkflow JSON/Reports| WM
+  WE -->|HTTP\nDatasource API| DSM
+  WE -->|Kernels/Streams| NB
+
+  %% Filesystem
+  WE -->|Spark app logs\n`/tmp/deepsense/seahorse/spark-applications-logs`| FS
+  SM -->|Temp/Downloads\n`/tmp/seahorse/download`| FS
+
+  %% Notes
+  classDef svc fill:#e8f0fe,stroke:#3b82f6,stroke-width:1px;
+  classDef infra fill:#fef3c7,stroke:#f59e0b,stroke-width:1px;
+  class WM,SM,DSM,LS,SCH,WE,NB svc;
+  class MQ,DB,FS infra;

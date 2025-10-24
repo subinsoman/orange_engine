@@ -1,0 +1,25 @@
+# Build dir
+target
+
+# IDEA files
+*.iml
+.idea
+
+# NPM
+node_modules
+npm-debug.log
+
+# Gulp Build
+.tmp
+.sass-cache
+*.cache
+src/coverage
+
+# Eclipse metadata
+.settings
+.classpath
+.project
+
+# npm building
+lib/*
+dist/

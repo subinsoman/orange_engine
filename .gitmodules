@@ -1,0 +1,3 @@
+[submodule "seahorse-sdk-example"]
+	path = seahorse-sdk-example
+	url = https://github.com/deepsense-io/seahorse-sdk-example.git

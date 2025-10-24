@@ -1,0 +1,62 @@
+# Created by http://www.gitignore.io
+
+### Scala ###
+*.class
+*.log
+
+### Python ###
+*.pyc
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Idea specific
+.idea/
+.idea_modules/
+*.iml
+
+# Sphinx files
+*/_build/
+
+# Developers' private configuration files
+private_*.conf
+private_*/
+
+# From publish_docker_compose_internal.sh
+docker-compose-internal.yml
+
+# H2 database files if project is run from InteliJ IDEA
+sessionmanager.mv.db
+sessionmanager.trace.db
+
+# Swagger-generated code
+datasourcemanager/src/generated/*
+
+# Jekyll
+_site/
+
+# Other
+remote_notebook/notebook_executing_kernel.zip
+docker-compose.yml
+deployment/mesos-spark-docker/Dockerfile
+
+/credentials/
+
+data/*
+library/*
+spark_applications_logs/*
+h2-data/*
+jars/*
+
