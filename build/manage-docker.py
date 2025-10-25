@@ -56,6 +56,10 @@ def simple_docker_with_spark_version(docker_image_name, docker_file_path):
     tag = "{}:{}".format(docker_image_name, git_sha())
     command = "(cd {}; docker build --build-arg SPARK_VERSION={} --build-arg HADOOP_VERSION={} -t {} .)".format(
         docker_file_path, spark_version, hadoop_version, tag)
+    # Ensure backward compatibility: SBT modules expect base image name 'seahorse-spark'.
+    # If we build a differently named spark image (e.g., 'sixdee-spark'), also tag it as 'seahorse-spark:<sha>'.
+    if docker_image_name != "seahorse-spark" and docker_image_name.endswith("spark"):
+        command = command + " && docker tag {} seahorse-spark:{}".format(tag, git_sha())
     return SimpleCommandConfig(docker_image_name, simple_command_type, command)
 
 
@@ -69,24 +73,24 @@ def sbt_docker(docker_image_name, project_name):
 
 def git_sha():
     sha_output_with_endline = subprocess.check_output("git rev-parse HEAD", shell=True, cwd=cwd)
-    return sha_output_with_endline.strip()
+    return sha_output_with_endline.strip().decode('utf-8')
 
 
 image_confs = [
-    simple_docker("sixdee-proxy", "proxy"),
-    simple_docker("sixdee-rabbitmq", "deployment/rabbitmq"),
-    simple_docker("sixdee-h2", "deployment/h2-docker"),
+    simple_docker("seahorse-proxy", "proxy"),
+    simple_docker("seahorse-rabbitmq", "deployment/rabbitmq"),
+    simple_docker("seahorse-h2", "deployment/h2-docker"),
     simple_docker_with_spark_version("sixdee-spark", "deployment/spark-docker"),
-    sbt_docker("sixdee-schedulingmanager", "schedulingmanager"),
-    sbt_docker('sixdee-sessionmanager', "sessionmanager"),
-    sbt_docker("sixdee-workflowmanager", "workflowmanager"),
-    sbt_docker("sixdee-datasourcemanager", "datasourcemanager"),
-    sbt_docker("sixdee-libraryservice", "libraryservice"),
-    simple_docker("sixdee-notebooks", "remote_notebook"),
-    #simple_docker("sixdee-authorization", "deployment/authorization-docker"),
-    #simple_docker("sixdee-mail", "deployment/exim"),
-    simple_command_docker("sixdee-frontend", "frontend/docker/build-frontend.sh"),
-    #simple_command_docker("sixdee-documentation", "./build/build_documentation_docker.sh")
+    sbt_docker("seahorse-schedulingmanager", "schedulingmanager"),
+    sbt_docker('seahorse-sessionmanager', "sessionmanager"),
+    sbt_docker("seahorse-workflowmanager", "workflowmanager"),
+    sbt_docker("seahorse-datasourcemanager", "datasourcemanager"),
+    sbt_docker("seahorse-libraryservice", "libraryservice"),
+    simple_docker("seahorse-notebooks", "remote_notebook"),
+    #simple_docker("seahorse-authorization", "deployment/authorization-docker"),
+    #simple_docker("seahorse-mail", "deployment/exim"),
+    simple_command_docker("seahorse-frontend", "frontend/docker/build-frontend.sh"),
+    #simple_command_docker("seahorse-documentation", "./build/build_documentation_docker.sh")
 ]
 image_conf_by_name = {conf.docker_image_name: conf for conf in image_confs}
 
