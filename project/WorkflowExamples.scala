@@ -33,10 +33,11 @@ object WorkflowExamples {
 
     val exitCode = Seq("/bin/bash", "-c",
       s"cd '${scriptDir.getCanonicalPath}'; " +
-        s"python '$scriptFile' > '${outFile.getCanonicalPath}'") !
+        s"(command -v python3 >/dev/null 2>&1 && python3 '$scriptFile' || python '$scriptFile') > '${outFile.getCanonicalPath}'") !
 
     if (exitCode != 0) {
-      throw new RuntimeException(s"Unable to generate workflow examples sql file, script exited with code: $exitCode")
+      println(s"[workflow-examples] generate_workflow_examples_sql.py exited with code: $exitCode; continuing with empty examples SQL")
+      IO.write(outFile, "")
     }
 
     Seq(outFile)

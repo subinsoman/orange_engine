@@ -2,9 +2,9 @@ FROM jupyter/minimal-notebook:6939ea1b1df3
 
 USER root
 
-RUN wget -q https://bootstrap.pypa.io/get-pip.py && python2.7 get-pip.py
+RUN wget -q https://bootstrap.pypa.io/pip/2.7/get-pip.py && python2.7 get-pip.py
 
-RUN pip2 install pika ipykernel
+RUN pip2 install 'setuptools<45' 'pika==0.13.1' 'ipykernel==4.10.1'
 RUN pip install pika ipykernel
 
 COPY code/forwarding_kernel/ /usr/local/share/jupyter/kernels/pyspark/

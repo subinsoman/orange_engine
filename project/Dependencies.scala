@@ -74,7 +74,7 @@ object Library {
   val mockitoCore = "org.mockito" % "mockito-core" % Version.mockito
   val nscalaTime = "com.github.nscala-time" %% "nscala-time" % Version.nsscalaTime
   val quartz = "org.quartz-scheduler" % "quartz" % "2.3.0"
-  val rabbitmq = "com.thenewmotion.akka" %% "akka-rabbitmq" % "2.2" excludeAkkaActor
+  val rabbitmq = "com.thenewmotion" %% "akka-rabbitmq" % "3.0.0" excludeAkkaActor
   val scalaReflect = "org.scala-lang" % "scala-reflect" % Version.scala
   val scalatest = "org.scalatest" %% "scalatest" % Version.scalatest
   val scalatra = "org.scalatra" %% "scalatra" % Version.scalatra
@@ -106,9 +106,8 @@ object Dependencies {
 
   val resolvers = Seq(
     "sonatype.org"           at "https://oss.sonatype.org/content/repositories/releases",
-    "spray.io"               at "http://repo.spray.io",
-    "The New Motion Public Repo" at "http://nexus.thenewmotion.com/content/groups/public/",
-    Classpaths.typesafeReleases
+    "spray.io"               at "http://repo.spray.io"
+    // Maven Central is available by default in sbt 0.13
   )
 
   object Spark {

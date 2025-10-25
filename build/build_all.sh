@@ -17,6 +17,11 @@ set -ex
 
 cd `dirname $0`"/../"
 
+export JAVA_HOME="/home/subinsoman/binaries/jdk1.8.0_202"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+echo "Using JAVA_HOME=$JAVA_HOME"
+
 GIT_TAG=`git rev-parse HEAD`
 
 ./build/build_docker_compose_internal.sh $GIT_TAG

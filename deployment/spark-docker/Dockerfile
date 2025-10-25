@@ -5,13 +5,9 @@ FROM ubuntu:16.04
 ARG SPARK_VERSION
 ARG HADOOP_VERSION
 
-# Install packages
-# libcurl4-openssl-dev and libssl-dev are needed for IRkernel dependencies
-# gfortran liblapack-dev liblapack3 libopenblas-base libopenblas-dev are needed for machine learning R libraries
+# Install packages (R-related build deps removed)
 RUN apt-get update && \
-    apt-get install -y build-essential openjdk-8-jre wget curl bzip2 openssh-server openssh-client libsm6 \
-    libcurl4-openssl-dev libssl-dev && \
-    apt-get install -y gfortran liblapack-dev liblapack3 libopenblas-base libopenblas-dev && \
+    apt-get install -y build-essential openjdk-8-jre wget curl bzip2 openssh-server openssh-client libsm6 && \
     apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
@@ -43,16 +39,10 @@ RUN wget -q -O /tmp/Miniconda2-4.3.27.1-Linux-x86_64.sh \
     /opt/conda/bin/conda install --yes \
     'tornado=4.1' 'ipykernel=4.3.1' 'jupyter_client=4.3.0' 'pandas=0.16*' 'matplotlib=1.4*' \
     'scipy=0.15*' 'seaborn=0.6*' 'scikit-learn=0.16*' 'libgfortran=1' && \
-# Install r packages
-    /opt/conda/bin/conda install --yes -c r r-essentials && \
-    /opt/conda/bin/conda install --yes -c r r-base='3.3.1 1' && \
-    /opt/conda/bin/conda install --yes -c r r-irkernel=0.7 && \
     /opt/conda/bin/conda clean --all --yes
 
 
-# Flag to use old g++ ABI (necessary for compilation of r-igraph package)
-RUN mkdir -p /root/.R && \
-    echo "CXXFLAGS+=-D_GLIBCXX_USE_CXX11_ABI=0" >> /root/.R/Makevars
+
 
 ENV PATH $PATH:/opt/conda/bin
 

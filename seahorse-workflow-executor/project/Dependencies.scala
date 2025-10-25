@@ -63,7 +63,7 @@ object Library {
   val log4JExtras = "log4j" % "apache-log4j-extras" % "1.2.17"
   val nscalaTime = "com.github.nscala-time" %% "nscala-time" % Version.nsscalaTime
   val mockitoCore = "org.mockito" % "mockito-core" % Version.mockito
-  val rabbitmq = "com.thenewmotion.akka" %% "akka-rabbitmq" % "2.2" excludeAkkaActor
+  val rabbitmq = "com.thenewmotion" %% "akka-rabbitmq" % "3.0.0" excludeAkkaActor
   val reflections = "org.reflections" % "reflections" % "0.9.11"
   val scalacheck = "org.scalacheck" %% "scalacheck" % Version.scalacheck
   val scalate = "org.scalatra.scalate" %% "scalate-core" % "1.7.1"
@@ -101,11 +101,10 @@ object Dependencies {
   import Library._
 
   val resolvers = Seq(
-    "typesafe.com" at "http://repo.typesafe.com/typesafe/repo/",
+    "typesafe.com" at "https://repo.typesafe.com/typesafe/repo/",
     "sonatype.org" at "https://oss.sonatype.org/content/repositories/releases",
-    "spray.io"     at "http://repo.spray.io",
-    "The New Motion Public Repo" at "http://nexus.thenewmotion.com/content/groups/public/",
-    "central.maven.org" at "http://central.maven.org/maven2/"
+    "spray.io"     at "http://repo.spray.io"
+    // Maven Central is available by default in sbt 0.13
   )
 
   class Spark(version: String) {

@@ -1,8 +1,8 @@
 # Copyright (c) 2016, CodiLime Inc.
-FROM  node:10-buster-slim
+FROM  node:14-bullseye-slim
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends --no-install-suggests -y git && \
+    apt-get install --no-install-recommends --no-install-suggests -y git ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /opt/docker

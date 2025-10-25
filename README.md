@@ -100,3 +100,11 @@ sbt test
 ## Enterprise options and support
 
 Seahorse was originally created at [deepsense.ai](http://deepsense.ai). Technical support and customization options are available upon [contact](mailto:contact@deepsense.ai).
+
+
+./build/build_with_java8.sh \
+  seahorse-schedulingmanager \
+  seahorse-sessionmanager \
+  seahorse-workflowmanager \
+  seahorse-datasourcemanager \
+  seahorse-libraryservice

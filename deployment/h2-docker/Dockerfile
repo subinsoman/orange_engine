@@ -4,8 +4,10 @@ FROM anapsix/alpine-java:jre8
 ENV H2_VERSION 1.4.192
 ENV DATA_DIR /opt/h2-data
 
-RUN wget http://repo2.maven.org/maven2/com/h2database/h2/${H2_VERSION}/h2-${H2_VERSION}.jar \
-        -O /opt/h2-${H2_VERSION}.jar && \
+RUN apk add --no-cache ca-certificates curl && \
+    update-ca-certificates && \
+    curl -fsSL https://repo1.maven.org/maven2/com/h2database/h2/${H2_VERSION}/h2-${H2_VERSION}.jar \
+      -o /opt/h2-${H2_VERSION}.jar && \
     mkdir -p ${DATA_DIR}
 
 EXPOSE 1521

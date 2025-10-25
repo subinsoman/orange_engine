@@ -51,3 +51,5 @@ install.packages("SOAR")
 install.packages("foreach")
 install.packages("doMC")
 install.packages("data.table")
+
+ ./build/manage-docker.py -b -i seahorse-spark seahorse-sessionmanager

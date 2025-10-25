@@ -19,7 +19,7 @@
     "moment": "2.17.1",
     "morgan": "1.7.0",
     "passport": "0.3.2",
-    "passport-cloudfoundry": "rajaraodv/passport-cloudfoundry",
+    "passport-cloudfoundry": "git+https://github.com/rajaraodv/passport-cloudfoundry.git",
     "request": "2.69.0",
     "require-dir": "0.3.0",
     "serve-favicon": "2.3.0",
