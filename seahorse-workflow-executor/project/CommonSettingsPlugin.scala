@@ -42,6 +42,12 @@ object CommonSettingsPlugin extends AutoPlugin {
       "-source", Version.java,
       "-target", Version.java
     ),
+    // Do not build/publish documentation jars and skip scaladoc to speed up builds
+    publishArtifact in (Compile, packageDoc) := false,
+    publishArtifact in (Test, packageDoc) := false,
+    sources in (Compile, doc) := Seq.empty,
+    skip in (Compile, doc) := true,
+    skip in (Test, doc) := true,
     // javacOptions are copied to javaDoc and -target is not a valid javaDoc flag.
     javacOptions in doc := Seq(
       "-source", Version.java,

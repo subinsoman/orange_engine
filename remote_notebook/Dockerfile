@@ -4,7 +4,7 @@ USER root
 
 RUN wget -q https://bootstrap.pypa.io/pip/2.7/get-pip.py && python2.7 get-pip.py
 
-RUN pip2 install 'setuptools<45' 'pika==0.13.1' 'ipykernel==4.10.1'
+RUN pip2 install 'setuptools<45' 'pika==0.13.1' 'ipykernel==4.10.1' 'tornado==5.1.1' 'pyzmq==17.1.2' 'jupyter-client==5.3.5'
 RUN pip install pika ipykernel
 
 COPY code/forwarding_kernel/ /usr/local/share/jupyter/kernels/pyspark/

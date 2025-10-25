@@ -41,6 +41,10 @@ object CommonSettingsPlugin extends AutoPlugin {
       "-source", "1.7",
       "-target", "1.7"
     ),
+    // Do not build/publish documentation jars and skip scaladoc to speed up builds
+    publishArtifact in (Compile, packageDoc) := false,
+    publishArtifact in (Test, packageDoc) := false,
+    sources in (Compile, doc) := Seq.empty,
     resolvers ++= Dependencies.resolvers,
     crossPaths := false,
     unmanagedResourceDirectories in Compile += globalResources,

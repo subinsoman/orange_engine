@@ -80,7 +80,7 @@ image_confs = [
     simple_docker("seahorse-proxy", "proxy"),
     simple_docker("seahorse-rabbitmq", "deployment/rabbitmq"),
     simple_docker("seahorse-h2", "deployment/h2-docker"),
-    simple_docker_with_spark_version("sixdee-spark", "deployment/spark-docker"),
+    simple_docker_with_spark_version("seahorse-spark", "deployment/spark-docker"),
     sbt_docker("seahorse-schedulingmanager", "schedulingmanager"),
     sbt_docker('seahorse-sessionmanager', "sessionmanager"),
     sbt_docker("seahorse-workflowmanager", "workflowmanager"),
